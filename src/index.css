@@ -1,0 +1,217 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ── CSS variables — dark mode is default ── */
+:root {
+  --bg: #080810;
+  --bg-card: rgba(255,255,255,0.02);
+  --bg-upload: rgba(255,255,255,0.02);
+  --bg-tab: rgba(255,255,255,0.03);
+  --border: #2a2a3a;
+  --border-card: #1e1e2e;
+  --border-tab: #1e1e2e;
+  --text-primary: #ffffff;
+  --text-secondary: #555555;
+  --text-muted: #444444;
+  --text-area: #cccccc;
+  --badge-bg: #1e1b4b;
+  --badge-color: #a5b4fc;
+  --badge-border: #312e81;
+  --toggle-bg: #1a1a2e;
+  --toggle-icon: '☀️';
+}
+
+/* ── Light mode variables ── */
+/* When the body has class "light" every variable changes */
+body.light {
+  --bg: #f4f4f8;
+  --bg-card: rgba(255,255,255,0.8);
+  --bg-upload: rgba(255,255,255,0.6);
+  --bg-tab: rgba(255,255,255,0.6);
+  --border: #e0e0f0;
+  --border-card: #e8e8f0;
+  --border-tab: #e8e8f0;
+  --text-primary: #0f0f1a;
+  --text-secondary: #666680;
+  --text-muted: #9999bb;
+  --text-area: #333344;
+  --badge-bg: #ede9fe;
+  --badge-color: #6d28d9;
+  --badge-border: #ddd6fe;
+  --toggle-bg: #ede9fe;
+  --toggle-icon: '🌙';
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ── Cursor glow ── */
+.cursor-glow {
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(127, 119, 221, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: left 0.1s ease, top 0.1s ease;
+  z-index: 0;
+}
+
+@media (hover: none) {
+  .cursor-glow {
+    display: none;
+  }
+}
+
+/* ── Fade in animation for grid images ── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.image-card {
+  animation: fadeInUp 0.3s ease forwards;
+}
+
+/* ── Pulse animation for low trials ── */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.pulse {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* ── Button shine effect ── */
+@keyframes shine {
+  from { left: -100%; }
+  to { left: 200%; }
+}
+
+.merge-btn {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s ease, background 0.2s ease;
+}
+
+.merge-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.merge-btn:active:not(:disabled) {
+  transform: translateY(0px);
+}
+
+.merge-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  transform: skewX(-20deg);
+}
+
+.merge-btn:hover::after {
+  animation: shine 0.6s ease forwards;
+}
+
+/* ── Upload area hover ── */
+.upload-label {
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.upload-label:hover {
+  border-color: #7F77DD !important;
+  background: rgba(127,119,221,0.08) !important;
+}
+
+/* ── Share button hover ── */
+.share-btn {
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.share-btn:hover {
+  background: #7F77DD !important;
+  color: white !important;
+}
+
+/* ── Theme toggle button ── */
+.theme-toggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--toggle-bg);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+  border-color: #7F77DD;
+  background: rgba(127,119,221,0.15);
+}
+
+/* ── Responsive — tablet ── */
+@media (max-width: 768px) {
+  .app-container {
+    padding: 32px 20px !important;
+  }
+  .app-title {
+    font-size: 20px !important;
+  }
+  .upload-label {
+    padding: 36px 20px !important;
+  }
+}
+
+/* ── Responsive — mobile ── */
+@media (max-width: 480px) {
+  .app-container {
+    padding: 24px 16px !important;
+  }
+  .app-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+  .app-title {
+    font-size: 18px !important;
+  }
+  .upload-label {
+    padding: 28px 16px !important;
+  }
+  .grid-single-col {
+    grid-template-columns: 1fr !important;
+  }
+  .grid-image {
+    height: 120px !important;
+  }
+  .merge-btn {
+    font-size: 14px !important;
+    padding: 14px !important;
+  }
+}
